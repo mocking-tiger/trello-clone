@@ -1,12 +1,8 @@
 import styled from "styled-components";
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  DropResult,
-} from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import { toDoState } from "./atoms";
+import DraggableCard from "./components/DraggableCard";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -29,13 +25,6 @@ const Board = styled.div`
   padding: 20px 10px;
   padding-top: 30px;
   background-color: ${(props) => props.theme.boardColor};
-  border-radius: 5px;
-`;
-
-const Card = styled.div`
-  margin-bottom: 5px;
-  padding: 10px 10px;
-  background-color: ${(props) => props.theme.cardColor};
   border-radius: 5px;
 `;
 
@@ -63,18 +52,7 @@ function App() {
             {(props) => (
               <Board ref={props.innerRef} {...props.droppableProps}>
                 {toDos.map((toDo, index) => (
-                  <Draggable key={toDo} draggableId={toDo} index={index}>
-                    {/* beautiful-dnd의 Draggable의 key와 draggableId의 값은 같아야함*/}
-                    {(props) => (
-                      <Card
-                        ref={props.innerRef}
-                        {...props.dragHandleProps}
-                        {...props.draggableProps}
-                      >
-                        {toDo}
-                      </Card>
-                    )}
-                  </Draggable>
+                  <DraggableCard key={toDo} toDo={toDo} index={index} />
                 ))}
                 {props.placeholder}
               </Board>

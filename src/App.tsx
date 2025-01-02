@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Board from "./components/Board";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import { toDoState } from "./atoms";
 
@@ -25,16 +25,36 @@ const Boards = styled.div`
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
-    if (!destination) return;
-
-    // setToDos((oldToDos) => {
-    //   const copyToDos = [...oldToDos];
-    //   copyToDos.splice(source.index, 1);
-    //   copyToDos.splice(destination.index, 0, draggableId);
-    //   // 배열.splice(타겟index, 삭제할 개수, 추가할 요소(옵션))
-    //   return copyToDos;
-    // });
+  const onDragEnd = (info: DropResult) => {
+    console.log(info);
+    const { destination, draggableId, source } = info;
+    if (destination?.droppableId === source.droppableId) {
+      // 같은 보드에서의 이동
+      setToDos((allBoards) => {
+        const copiedBoard = [...allBoards[source.droppableId]];
+        copiedBoard.splice(source.index, 1);
+        copiedBoard.splice(destination.index, 0, draggableId);
+        // 배열.splice(타겟index, 삭제할 개수, 추가할 요소(옵션))
+        return {
+          ...allBoards,
+          [source.droppableId]: copiedBoard,
+        };
+      });
+    } else {
+      // 보드간 이동
+      setToDos((allBoards) => {
+        if (!destination) return { ...allBoards };
+        const sourceBoard = [...allBoards[source.droppableId]];
+        const destinationBoard = [...allBoards[destination?.droppableId]];
+        sourceBoard.splice(source.index, 1);
+        destinationBoard.splice(destination.index, 0, draggableId);
+        return {
+          ...allBoards,
+          [source.droppableId]: sourceBoard,
+          [destination?.droppableId]: destinationBoard,
+        };
+      });
+    }
   };
 
   return (

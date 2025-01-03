@@ -16,14 +16,14 @@ const Card = styled.div<{ isDragging: boolean }>`
 // 스타일드 컴포넌트 영역 끝
 
 interface IDraggableCardProps {
-  toDo: string;
+  toDoId: number;
+  toDoText: string;
   index: number;
 }
 
-function DraggableCard({ toDo, index }: IDraggableCardProps) {
-  console.log(toDo, " is rendered");
+function DraggableCard({ toDoId, toDoText, index }: IDraggableCardProps) {
   return (
-    <Draggable key={toDo} draggableId={toDo} index={index}>
+    <Draggable key={toDoId} draggableId={String(toDoId)} index={index}>
       {/* beautiful-dnd의 Draggable의 key와 draggableId의 값은 같아야함*/}
       {(provided, snapshot) => (
         <Card
@@ -32,7 +32,7 @@ function DraggableCard({ toDo, index }: IDraggableCardProps) {
           {...provided.draggableProps}
           isDragging={snapshot.isDragging}
         >
-          {toDo}
+          {toDoText}
         </Card>
       )}
     </Draggable>

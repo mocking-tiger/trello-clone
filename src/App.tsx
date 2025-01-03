@@ -27,13 +27,14 @@ function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onDragEnd = (info: DropResult) => {
     console.log(info);
-    const { destination, draggableId, source } = info;
+    const { destination, draggableId: taskObj, source } = info;
     if (destination?.droppableId === source.droppableId) {
       // 같은 보드에서의 이동
       setToDos((allBoards) => {
         const copiedBoard = [...allBoards[source.droppableId]];
+        const taskObj = copiedBoard[source.index];
         copiedBoard.splice(source.index, 1);
-        copiedBoard.splice(destination.index, 0, draggableId);
+        copiedBoard.splice(destination.index, 0, taskObj);
         // 배열.splice(타겟index, 삭제할 개수, 추가할 요소(옵션))
         return {
           ...allBoards,
@@ -45,9 +46,10 @@ function App() {
       setToDos((allBoards) => {
         if (!destination) return { ...allBoards };
         const sourceBoard = [...allBoards[source.droppableId]];
+        const taskObj = sourceBoard[source.index];
         const destinationBoard = [...allBoards[destination?.droppableId]];
         sourceBoard.splice(source.index, 1);
-        destinationBoard.splice(destination.index, 0, draggableId);
+        destinationBoard.splice(destination.index, 0, taskObj);
         return {
           ...allBoards,
           [source.droppableId]: sourceBoard,

@@ -27,7 +27,7 @@ function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onDragEnd = (info: DropResult) => {
     console.log(info);
-    const { destination, draggableId: taskObj, source } = info;
+    const { destination, source } = info;
     if (destination?.droppableId === source.droppableId) {
       // 같은 보드에서의 이동
       setToDos((allBoards) => {

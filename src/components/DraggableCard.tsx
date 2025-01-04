@@ -2,15 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 
-const Card = styled.div<{ isDragging: boolean }>`
+const Card = styled.div<{ $isDragging: boolean }>`
   margin-bottom: 5px;
   padding: 10px 10px;
   background-color: ${(props) =>
-    props.isDragging ? "#74b9ff" : props.theme.cardColor};
+    props.$isDragging ? "#74b9ff" : props.theme.cardColor};
   border-radius: 5px;
   user-select: none;
   box-shadow: ${(props) =>
-    props.isDragging ? "0px 2px 5px rgba(0,0,0,0.05)" : ""};
+    props.$isDragging ? "0px 2px 5px rgba(0,0,0,0.05)" : ""};
 `;
 
 // 스타일드 컴포넌트 영역 끝
@@ -30,7 +30,7 @@ function DraggableCard({ toDoId, toDoText, index }: IDraggableCardProps) {
           ref={provided.innerRef}
           {...provided.dragHandleProps}
           {...provided.draggableProps}
-          isDragging={snapshot.isDragging}
+          $isDragging={snapshot.isDragging}
         >
           {toDoText}
         </Card>

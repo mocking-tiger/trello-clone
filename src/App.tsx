@@ -29,12 +29,12 @@ const TrashCan = styled.div<IAreaProps>`
   left: 50%;
   bottom: 150px;
   background-color: ${(props) =>
-    props.isDraggingOver ? "#b2bec3" : "#dfe6e9"};
+    props.$isDraggingOver ? "#b2bec3" : "#dfe6e9"};
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: scale(${(props) => (props.isDraggingOver ? 1.2 : 1)});
+  transform: scale(${(props) => (props.$isDraggingOver ? 1.2 : 1)});
   transition: all 0.2s ease-in-out;
 
   img {
@@ -106,7 +106,7 @@ function App() {
           <TrashCan
             ref={provided.innerRef}
             {...provided.droppableProps}
-            isDraggingOver={snapshot.isDraggingOver}
+            $isDraggingOver={snapshot.isDraggingOver}
           >
             <img src={CanIcon} alt="휴지통 아이콘" />
             <div style={{ position: "absolute" }}>{provided.placeholder}</div>

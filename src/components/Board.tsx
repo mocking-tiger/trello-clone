@@ -6,8 +6,8 @@ import { ITodo, toDoState } from "../atoms";
 import { useSetRecoilState } from "recoil";
 
 export interface IAreaProps {
-  isDraggingOver: boolean;
-  isDraggingFromThis?: boolean;
+  $isDraggingOver: boolean;
+  $isDraggingFromThis?: boolean;
 }
 
 const Wrapper = styled.div`
@@ -30,9 +30,9 @@ const Title = styled.h2`
 const Area = styled.div<IAreaProps>`
   padding: 10px;
   background-color: ${(props) =>
-    props.isDraggingOver
+    props.$isDraggingOver
       ? "#b2bec3"
-      : props.isDraggingFromThis
+      : props.$isDraggingFromThis
       ? "#dfe6e9"
       : "transparent"};
   flex-grow: 1;
@@ -99,8 +99,8 @@ export default function Board({ toDos, boardId }: IBoardProps) {
           <Area
             ref={provided.innerRef}
             {...provided.droppableProps}
-            isDraggingOver={snapshot.isDraggingOver}
-            isDraggingFromThis={Boolean(snapshot.draggingFromThisWith)}
+            $isDraggingOver={snapshot.isDraggingOver}
+            $isDraggingFromThis={Boolean(snapshot.draggingFromThisWith)}
           >
             {toDos.map((toDo, index) => (
               <DraggableCard

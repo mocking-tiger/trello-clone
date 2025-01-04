@@ -76,10 +76,12 @@ export default function Board({ toDos, boardId }: IBoardProps) {
       text: toDo,
     };
     setToDos((allBoards) => {
-      return {
+      const newToDos = {
         ...allBoards,
         [boardId]: [...allBoards[boardId], newToDo],
       };
+      localStorage.setItem("TODOS", JSON.stringify(newToDos));
+      return newToDos;
     });
     setValue("toDo", "");
   };

@@ -55,11 +55,13 @@ function App() {
       setToDos((allBoards) => {
         const copiedBoard = [...allBoards[source.droppableId]];
         copiedBoard.splice(source.index, 1);
-
-        return {
+        const newToDos = {
           ...allBoards,
           [source.droppableId]: copiedBoard,
         };
+        localStorage.setItem("TODOS", JSON.stringify(newToDos));
+
+        return newToDos;
       });
     } else if (destination?.droppableId === source.droppableId) {
       // 같은 보드에서의 이동

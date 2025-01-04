@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form";
 import { ITodo, toDoState } from "../atoms";
 import { useSetRecoilState } from "recoil";
 
-interface IAreaProps {
+export interface IAreaProps {
   isDraggingOver: boolean;
-  isDraggingFromThis: boolean;
+  isDraggingFromThis?: boolean;
 }
 
 const Wrapper = styled.div`
@@ -28,7 +28,7 @@ const Title = styled.h2`
 `;
 
 const Area = styled.div<IAreaProps>`
-  padding: 20px;
+  padding: 10px;
   background-color: ${(props) =>
     props.isDraggingOver
       ? "#b2bec3"
@@ -44,6 +44,14 @@ const Form = styled.form`
 
   input {
     width: 100%;
+    margin: 0 auto;
+    padding: 10px 5px;
+    border: 0px;
+    border-radius: 6px;
+
+    &:focus {
+      outline: none;
+    }
   }
 `;
 

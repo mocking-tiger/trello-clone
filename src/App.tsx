@@ -73,7 +73,7 @@ const AddBoardButton = styled.div`
 const NewBoardModal = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.4);
   position: fixed;
   top: 0;
   left: 0;
@@ -85,7 +85,7 @@ const NewBoardModal = styled.div`
   div {
     width: 480px;
     padding: 30px;
-    background-color: #b2bec3;
+    background-color: ${(props) => props.theme.bgColor};
     border-radius: 6px;
 
     h2 {

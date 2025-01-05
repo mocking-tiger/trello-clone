@@ -1,5 +1,6 @@
 import DraggableCard from "./DraggableCard";
 import styled from "styled-components";
+import DeleteIcon from "../assets/plus.svg";
 import { Droppable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
 import { ITodo, toDoState } from "../atoms";
@@ -25,6 +26,18 @@ const Title = styled.h2`
   font-weight: 600;
   margin-bottom: 10px;
   font-size: 18px;
+  user-select: none;
+  position: relative;
+
+  img {
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: 2px;
+    right: 5%;
+    transform: rotate(45deg);
+    cursor: pointer;
+  }
 `;
 
 const Area = styled.div<IAreaProps>`
@@ -87,9 +100,23 @@ export default function Board({ toDos, boardId }: IBoardProps) {
     setValue("toDo", "");
   };
 
+  const deleteBoard = () => {
+    setToDos((allBoards) => {
+      const newToDos = {
+        ...allBoards,
+      };
+      delete newToDos[boardId];
+      localStorage.setItem("TODOS", JSON.stringify(newToDos));
+      return newToDos;
+    });
+  };
+
   return (
     <Wrapper>
-      <Title>{boardId}</Title>
+      <Title>
+        {boardId}
+        <img src={DeleteIcon} alt="보드 지우기 아이콘" onClick={deleteBoard} />
+      </Title>
       <Form onSubmit={handleSubmit(onValid)}>
         <input
           {...register("toDo", { required: true })}

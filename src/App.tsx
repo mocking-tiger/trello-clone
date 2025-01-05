@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import Board, { IAreaProps } from "./components/Board";
+import Board, { IAreaProps, IForm } from "./components/Board";
 import CanIcon from "./assets/trash.svg";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import { toDoState } from "./atoms";
+import { useForm } from "react-hook-form";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -46,6 +47,7 @@ const TrashCan = styled.div<IAreaProps>`
 // 스타일드 컴포넌트 영역 끝
 
 function App() {
+  const { register, setValue, handleSubmit } = useForm<IForm>();
   const [toDos, setToDos] = useRecoilState(toDoState);
 
   const onDragEnd = (info: DropResult) => {
@@ -94,8 +96,28 @@ function App() {
     }
   };
 
+  const createBoard = ({ boardName }: IForm) => {
+    console.log(boardName);
+    setValue("boardName", "");
+    setToDos((allBoards) => {
+      const newBoard = {
+        ...allBoards,
+        [boardName]: [],
+      };
+      localStorage.setItem("TODOS", JSON.stringify(newBoard));
+      return newBoard;
+    });
+  };
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      <form onSubmit={handleSubmit(createBoard)}>
+        <input
+          {...register("boardName", { required: true })}
+          type="text"
+          placeholder="새 보드 생성"
+        />
+      </form>
       <Wrapper>
         <Boards>
           {Object.keys(toDos).map((boardId) => (

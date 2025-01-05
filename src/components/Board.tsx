@@ -62,8 +62,9 @@ interface IBoardProps {
   boardId: string;
 }
 
-interface IForm {
+export interface IForm {
   toDo: string;
+  boardName: string;
 }
 
 export default function Board({ toDos, boardId }: IBoardProps) {

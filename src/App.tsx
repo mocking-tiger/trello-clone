@@ -197,7 +197,7 @@ function App() {
           ))}
         </Boards>
       </Wrapper>
-      {Object.keys(toDos).length && (
+      {Object.keys(toDos).length > 0 && (
         <Droppable droppableId="trash">
           {(provided, snapshot) => (
             <TrashCan
